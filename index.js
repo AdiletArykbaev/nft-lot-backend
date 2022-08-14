@@ -4,11 +4,13 @@ import * as AdminController from "./Controllers/AdminController.js";
 import checkAuth from "./Utils/checkAuth.js";
 import { loginValidator } from "./Validations/validation.js";
 import multer from "multer";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
-const PORT = 4000;
-
+const PORT = process.env.APP;
+const dbLink = process.env.USER_STRING;
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "uploads");
@@ -27,9 +29,7 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://adik222:huskar275206@cluster0.pjvmyms.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(dbLink)
   .then(() => {
     console.log("db ok");
   })
@@ -52,4 +52,5 @@ app.listen(PORT, (err) => {
     console.log(err);
   }
   console.log(`app running on port ${PORT}`);
+  console.log(process.env.USER_STRING);
 });
