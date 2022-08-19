@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import * as AdminController from "./Controllers/AdminController.js";
+import * as WinnerController from "./Controllers/WinnerController.js";
 import checkAuth from "./Utils/checkAuth.js";
 import { loginValidator } from "./Validations/validation.js";
 import multer from "multer";
@@ -21,7 +22,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
+const day = new Date();
+console.log("myDay", day.getDay());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -52,5 +54,6 @@ app.listen(PORT, (err) => {
     console.log(err);
   }
   console.log(`app running on port ${PORT}`);
-  console.log(process.env.USER_STRING);
 });
+
+app.get("/getWinner", WinnerController.getWinner);
