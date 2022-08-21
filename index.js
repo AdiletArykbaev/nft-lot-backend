@@ -22,8 +22,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const day = new Date();
-console.log("myDay", day.getDay());
 app.use(express.json());
 
 app.get("/", (req, res) => {
